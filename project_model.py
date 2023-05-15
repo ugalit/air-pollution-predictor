@@ -5,19 +5,17 @@ Project: prediction of particulate matter in Berlin using traffic and weather da
 --- MODEL DATA---
 '''
 
-#import os
-#import glob
 import numpy as np
 import pandas as pd
-#import seaborn as sns
-#import matplotlib.pyplot as plt
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, OneHotEncoder, PolynomialFeatures
-#from sklearn.preprocessing import QuantileTransformer, PowerTransformer
+from sklearn.preprocessing import QuantileTransformer, PowerTransformer
 from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
-#from sklearn.impute import SimpleImputer
+from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor, VotingRegressor
 
@@ -136,18 +134,18 @@ for model in model_names:
 for gs in model_names:
     run_gridSearch(gs)
 
-# rf_feature_importance = pd.DataFrame(
-#     zip(Xtrain.columns, rf_pipeline.named_steps['model'].feature_importances_),
-#     columns=['feature', 'importance'])
-# rf_feature_importance['abs_value'] = rf_feature_importance['importance'].apply(lambda x: abs(x))
-# rf_feature_importance = rf_feature_importance.sort_values('abs_value', ascending=False)
+rf_feature_importance = pd.DataFrame(
+    zip(Xtrain.columns, rf_pipeline.named_steps['model'].feature_importances_),
+    columns=['feature', 'importance'])
+rf_feature_importance['abs_value'] = rf_feature_importance['importance'].apply(lambda x: abs(x))
+rf_feature_importance = rf_feature_importance.sort_values('abs_value', ascending=False)
 
-# sns.set(rc={"figure.figsize":(12, 10)})
-# _ = plt.figure()
-# img = sns.barplot(y='feature', x='importance', data=rf_feature_importance)
-# fig = img.get_figure()
-# fig.savefig('plots/merged/Mariendorfer/RF_feature_importance.png', bbox_inches="tight")
-# fig.clf()
+sns.set(rc={"figure.figsize":(12, 10)})
+_ = plt.figure()
+img = sns.barplot(y='feature', x='importance', data=rf_feature_importance)
+fig = img.get_figure()
+fig.savefig('plots/merged/Mariendorfer/RF_feature_importance.png', bbox_inches="tight")
+fig.clf()
 
-# features_out_rf = rf_feature_importance[
-#     rf_feature_importance['importance']<0.015]['feature'].values
+features_out_rf = rf_feature_importance[
+    rf_feature_importance['importance']<0.015]['feature'].values
